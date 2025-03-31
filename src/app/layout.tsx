@@ -1,39 +1,40 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import './style.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const navLinks = [
+  { name: "Register", href: "/register" },
+  { name: "Login", href: "/login" },
+  { name: "Forgot Password", href: "/forgot-password" },
+];
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Hello Praveen Sharma",
-  description: "Praveen Sharma by create next app",
-};
-
-export default function RootLayout({
+export default function AuthLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;  
-}>) {
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-      <header style={{backgroundColor:'lightblue',padding:'10px'}}>
-        <p>Header</p>
-      </header>
-      {children}
-      <footer style={{backgroundColor:'lightgoldenrodyellow',padding:'10px'}}>
-        <p>Footer</p>
-      </footer>
+    <html>
+      <body>
+        <div>
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === link.href ||
+              (pathname.startsWith(link.href) && link.href !== "/");
+            return (
+              <Link
+                className={isActive ? "font-bold mr-4" : "text-blue-500 mr-4-"}
+                href={link.href}
+                key={link.name}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+          {children}
+        </div>
       </body>
     </html>
   );
