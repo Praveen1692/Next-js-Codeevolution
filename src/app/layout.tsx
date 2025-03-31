@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import './style.css';
-
+import './globals.css';
 const navLinks = [
   { name: "Register", href: "/register" },
   { name: "Login", href: "/login" },
@@ -25,7 +24,7 @@ export default function AuthLayout({
               (pathname.startsWith(link.href) && link.href !== "/");
             return (
               <Link
-                className={isActive ? "font-bold mr-4" : "text-blue-500 mr-4-"}
+                className={isActive ? "font-bold mr-4 p-6" : "text-blue-500 mr-4 p-6"}
                 href={link.href}
                 key={link.name}
               >
